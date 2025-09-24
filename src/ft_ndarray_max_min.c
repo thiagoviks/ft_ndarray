@@ -1,4 +1,4 @@
-#include "ft_mini_numpy.h"
+#include "include/ft_mini_numpy.h"
 
 int ft_ndarray_max(ndarray *arr) {
     int max_val = *((int*)arr->data);

@@ -1,4 +1,4 @@
-#include "ft_mini_numpy.h"
+#include "include/ft_mini_numpy.h"
 
 void ft_add_ndarrays(ndarray *a, ndarray *b, ndarray *result) {
     if (!a || !b || !result) return;

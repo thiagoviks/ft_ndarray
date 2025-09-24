@@ -1,4 +1,4 @@
-#include "ft_mini_numpy.h"
+#include "include/ft_mini_numpy.h"
 
 void ft_free_ndarray(ndarray *arr) {
     if (!arr) return;

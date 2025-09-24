@@ -1,4 +1,4 @@
-#include "ft_mini_numpy.h"
+#include "include/ft_mini_numpy.h"
 
 // Helper function to calculate the total number of elements in the ndarray based on its shape
 int ft_calculate_total_elements(int *shape, int ndim) {
@@ -32,7 +32,7 @@ int *ft_ndarray_broadcast(ndarray *a, ndarray *b) {
 
         // Check compatibility of shapes
         if (a_shape_padded[i] != b_shape_padded[i] && a_shape_padded[i] != 1 && b_shape_padded[i] != 1) {
-            printf("Broadcasting error: Shapes are not compatible\n");
+            ft_printf("Broadcasting error: Shapes are not compatible\n");
             ft_free(a_shape_padded);
             ft_free(b_shape_padded);
             return NULL;
@@ -97,20 +97,20 @@ ndarray *ft_ndarray_add(ndarray *a, ndarray *b) {
 //     if (arr->itemsize == sizeof(int)) {
 //         int *data = (int*) arr->data;
 //         for (int i = 0; i < total_elements; i++) {
-//             printf("%d ", data[i]);
+//             ft_printf("%d ", data[i]);
 //         }
 //     }
 //     else if (arr->itemsize == sizeof(float)) {
 //         float *data = (float*) arr->data;
 //         for (int i = 0; i < total_elements; i++) {
-//             printf("%f ", data[i]);
+//             ft_printf("%f ", data[i]);
 //         }
 //     }
 //     else if (arr->itemsize == sizeof(double)) {
 //         double *data = (double*) arr->data;
 //         for (int i = 0; i < total_elements; i++) {
-//             printf("%lf ", data[i]);
+//             ft_printf("%lf ", data[i]);
 //         }
 //     }
-//     printf("\n");
+//     ft_printf("\n");
 // }

@@ -1,4 +1,4 @@
-#include "ft_mini_numpy.h"
+#include "include/ft_mini_numpy.h"
 
 ndarray* ft_ndarray_concatenate(ndarray *a, ndarray *b) {
     if (a->shape[0] != b->shape[0]) {

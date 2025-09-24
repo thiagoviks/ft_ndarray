@@ -1,4 +1,4 @@
-#include "ft_mini_numpy.h"
+#include "include/ft_mini_numpy.h"
 
 ndarray* ft_create_ndarray_with_strides(int *shape, int ndim, size_t itemsize) {
     ndarray* arr = (ndarray*) ft_malloc(sizeof(ndarray));

@@ -1,4 +1,4 @@
-#include "ft_mini_numpy.h"
+#include "include/ft_mini_numpy.h"
 
 double ft_ndarray_sum(ndarray *arr) {
     double sum = 0;
@@ -26,7 +26,7 @@ double ft_ndarray_sum(ndarray *arr) {
         }
     }
     else {
-        printf("Unsupported item size\n");
+        ft_printf("Unsupported item size\n");
         return 0;
     }
 

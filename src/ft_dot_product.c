@@ -1,4 +1,4 @@
-#include "ft_mini_numpy.h"
+#include "include/ft_mini_numpy.h"
 
 // Computes the dot product of two 1D arrays
 double ft_dot_product(ndarray *a, ndarray *b) {

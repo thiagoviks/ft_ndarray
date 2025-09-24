@@ -1,4 +1,4 @@
-#include "ft_mini_numpy.h"
+#include "include/ft_mini_numpy.h"
 
 t_slice ft_ndarray_slice(float *matrix, int total_cols, int start_row, int start_col, int num_rows, int num_cols) {
     t_slice s;
@@ -122,18 +122,18 @@ void ft_print_view(ndarray_view *view, char type) {
     for (int i = 0; i < view->ndim; i++)
         total *= view->shape[i];
 
-    printf("View: [ ");
+    ft_printf("View: [ ");
     for (int i = 0; i < total; i++) {
         char *ptr = (char *)view->data;
         if (type == 'i') {
             int val;
             ft_memcpy(&val, ptr + i * view->itemsize, view->itemsize);
-            printf("%d ", val);
+            ft_printf("%d ", val);
         } else if (type == 'f') {
             float val;
             ft_memcpy(&val, ptr + i * view->itemsize, view->itemsize);
-            printf("%.2f ", val);
+            ft_printf("%.2f ", val);
         }
     }
-    printf("]\n");
+    ft_printf("]\n");
 }

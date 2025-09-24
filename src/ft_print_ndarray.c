@@ -1,4 +1,4 @@
-#include "ft_mini_numpy.h"
+#include "include/ft_mini_numpy.h"
 
 void ft_print_ndarray(ndarray *arr, char type) {
     if (!arr) return;
@@ -6,15 +6,15 @@ void ft_print_ndarray(ndarray *arr, char type) {
     for (int i = 0; i < arr->ndim; i++)
         total_size *= arr->shape[i];
 
-    printf("[");
+    ft_printf("[");
     if (type == 'i') { // Integer array
         int *data = (int *)arr->data;
         for (size_t i = 0; i < total_size; i++)
-            printf("%d ", data[i]);
+            ft_printf("%d ", data[i]);
     } else if (type == 'd') { // Double array
         double *data = (double *)arr->data;
         for (size_t i = 0; i < total_size; i++)
-            printf("%.2f ", data[i]);
+            ft_printf("%.2f ", data[i]);
     }
-    printf("]\n");
+    ft_printf("]\n");
 }
