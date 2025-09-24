@@ -1,9 +1,7 @@
-
+#include <stdio.h>
 #include <math.h>
 #include <ft_maki.h>
 #include "../include/ft_mini_pandas.h"
-
-double ft_ndarray_get(const ndarray *arr, int row, int col);
 
 double ft_ndarray_get(const ndarray *arr, int row, int col) {
     char *base = (char*)arr->data;
@@ -139,6 +137,11 @@ void ft_ndarray_groupby_sum(const ndarray *arr, int group_col) {
 void ft_ndarray_apply(ndarray *arr, apply_func func) {
     int total = 1;
     for (int i = 0; i < arr->ndim; i++) total *= arr->shape[i];
+
+    if (arr->itemsize != sizeof(double)) {
+        fprintf(stderr, "ft_ndarray_apply: itemsize incompatível (esperado double)\n");
+        return;
+    }
     double *data = (double *)arr->data;
 
     for (int i = 0; i < total; i++) {
@@ -146,14 +149,138 @@ void ft_ndarray_apply(ndarray *arr, apply_func func) {
     }
 }
 
-double ft_square(double x) {
+// Aplica função numérica
+void ft_ndarray_apply_numeric(ndarray *arr, apply_func_numeric func) {
+    int total = 1;
+    for (int i = 0; i < arr->ndim; i++) total *= arr->shape[i];
+
+    char *data = (char *)arr->data;
+
+    for (int i = 0; i < total; i++) {
+        void *element = data + i * arr->itemsize;
+        func(element, arr->itemsize);
+    }
+}
+
+// Aplica função de string
+void ft_ndarray_apply_string(ndarray *arr, apply_func_string func) {
+    if (arr->itemsize != sizeof(char *)) {
+        fprintf(stderr, "ft_apply_string: itemsize inválido (esperado char*)\n");
+        return;
+    }
+
+    int total = 1;
+    for (int i = 0; i < arr->ndim; i++) total *= arr->shape[i];
+
+    char **data = (char **)arr->data;
+
+    for (int i = 0; i < total; i++) {
+        func(&data[i]); // passa o ponteiro da string
+    }
+}
+
+double ft_ndarray_square(double x) {
     return x * x;
 }
 
+// Square genérico
+void ft_ndarray_square_num(void *element, size_t itemsize) {
+    if (itemsize == sizeof(int)) {
+        int *x = (int *)element;
+        *x = (*x) * (*x);
+    } else if (itemsize == sizeof(float)) {
+        float *x = (float *)element;
+        *x = (*x) * (*x);
+    } else if (itemsize == sizeof(double)) {
+        double *x = (double *)element;
+        *x = (*x) * (*x);
+    }
+}
+
+// Incrementa +1 genérico
+void ft_ndarray_increment_num(void *element, size_t itemsize) {
+    if (itemsize == sizeof(int)) {
+        (*(int *)element)++;
+    } else if (itemsize == sizeof(float)) {
+        (*(float *)element)++;
+    } else if (itemsize == sizeof(double)) {
+        (*(double *)element)++;
+    }
+}
+
+void ft_ndarray_strtoupper(char **element) {
+    char *s = *element;
+    if (!s) return;
+    for (int i = 0; s[i]; i++) {
+        s[i] = (char)ft_toupper((unsigned char)s[i]);
+    }
+}
+
+void ft_ndarray_strtolower(char **element) {
+    char *s = *element;
+    if (!s) return;
+    for (int i = 0; s[i]; i++) {
+        s[i] = (char)ft_tolower((unsigned char)s[i]);
+    }
+}
+
+void ft_ndarray_fillna_string(char **element) {
+    if (!*element) {
+        *element = ft_strdup("N/A"); // ou ft_strdup
+    }
+}
+
+
 // ndarray_pandas.c
 
-
 // Function to read a CSV file and convert it to ndarray
+
+// CSV-aware tokenizer (handles quoted fields with commas inside)
+static char *ft_csv_next_token(char **line) {
+    if (!line || !*line) return NULL;
+
+    char *start = *line;
+    char *p = start;
+    int in_quotes = 0;
+
+    while (*p) {
+        if (*p == '"') {
+            in_quotes = !in_quotes; // toggle quote state
+        } else if (*p == ',' && !in_quotes) {
+            // End of token
+            *p = '\0';
+            *line = p + 1;
+            return start;
+        }
+        p++;
+    }
+
+    // Last token in the line
+    *line = NULL;
+    return start;
+}
+
+// Helper: trim spaces and surrounding quotes
+static char *ft_csv_clean_field(char *token) {
+    if (!token) return NULL;
+
+    // Trim leading spaces
+    while (*token == ' ' || *token == '\t' || *token == '\n') token++;
+
+    // Trim trailing spaces
+    char *end = token + ft_strlen(token) - 1;
+    while (end > token && (*end == ' ' || *end == '\t' || *end == '\n'))
+        *end-- = '\0';
+
+    // Remove surrounding quotes if present
+    if (*token == '"' && end > token && *end == '"') {
+        *end = '\0';
+        token++;
+    }
+
+    return token;
+}
+
 ndarray ft_ndarray_read_csv(const char *filename) {
     FILE *file = fopen(filename, "r");
     if (!file) {
@@ -161,25 +288,31 @@ ndarray ft_ndarray_read_csv(const char *filename) {
         ft_exit(EXIT_FAILURE);
     }
 
-    char line[1024];
+    char line[4096];  // large enough buffer for long rows
     int rows = 0, cols = 0;
 
-    // Count number of rows and columns
+    // First pass: count rows and validate column count
     while (fgets(line, sizeof(line), file)) {
-        rows++;
-        char *token = ft_strtok(line, ",");
         int col_count = 0;
+        char *cursor = line;
+        char *token = ft_csv_next_token(&cursor);
         while (token) {
             col_count++;
-            token = ft_strtok(NULL, ",");
+            token = ft_csv_next_token(&cursor);
         }
         if (cols == 0) {
-            cols = col_count;
+            cols = col_count; // set initial number of columns
+        } else if (col_count != cols) {
+            fprintf(stderr, "Inconsistent number of columns at row %d\n", rows + 1);
+            ft_exit(EXIT_FAILURE);
         }
+        rows++;
     }
 
+    // Reset file pointer
     fseek(file, 0, SEEK_SET);
 
+    // Allocate ndarray memory
     double *data = (double *)ft_malloc(rows * cols * sizeof(double));
     int *shape = (int *)ft_malloc(2 * sizeof(int));
     int *strides = (int *)ft_malloc(2 * sizeof(int));
@@ -188,12 +321,15 @@ ndarray ft_ndarray_read_csv(const char *filename) {
     strides[0] = cols * sizeof(double);
     strides[1] = sizeof(double);
 
+    // Second pass: read and fill the ndarray
     int index = 0;
     while (fgets(line, sizeof(line), file)) {
-        char *token = ft_strtok(line, ",");
+        char *cursor = line;
+        char *token = ft_csv_next_token(&cursor);
         while (token) {
-            data[index++] = ft_atof(token);
-            token = ft_strtok(NULL, ",");
+            char *clean = ft_csv_clean_field(token);
+            data[index++] = ft_atof(clean);
+            token = ft_csv_next_token(&cursor);
         }
     }
 
@@ -202,6 +338,7 @@ ndarray ft_ndarray_read_csv(const char *filename) {
     ndarray arr = {data, shape, 2, sizeof(double), strides};
     return arr;
 }
+
 
 // Function to print shape, dtype and non-null count
 void ft_ndarray_info(const ndarray *arr) {
