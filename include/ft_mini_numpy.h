@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <ft_maki.h>
 
 #define BLOCK_SIZE sizeof(t_block)
 
@@ -72,12 +73,4 @@ ndarray_view ft_slice_ndarray(ndarray *arr, int start[], int end[]);
 void *ndarray_view_get(const ndarray_view *view, int row, int col);
 void *ft_get_view_element(ndarray_view *view, int indices[]);
 
-//ft_sbrk_malloc
-void ft_write(int num);
-void *ft_memset(void *ptr, int value, size_t num);
-void *ft_memcpy(void *dest, const void *src, size_t num);
-void *ft_malloc(size_t size);
-void ft_free(void *ptr);
-void *ft_calloc(size_t nmemb, size_t size);
-void *ft_realloc(void *ptr, size_t size);
 #endif
