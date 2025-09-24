@@ -22,6 +22,9 @@ void    ft_ndarray_apply_string(ndarray *arr, apply_func_string func);
 double  ft_ndarray_square(double x);
 void    ft_ndarray_square_num(void *element, size_t itemsize);
 void    ft_ndarray_increment_num(void *element, size_t itemsize);
+void    ft_ndarray_strtoupper(char **element);
+void    ft_ndarray_strtolower(char **element);
+void    ft_ndarray_fillna_string(char **element);
 
 ndarray ft_ndarray_read_csv(const char *filename);
 void    ft_ndarray_info(const ndarray *arr);
