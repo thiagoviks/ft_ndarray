@@ -3,7 +3,8 @@
 #include <math.h>
 #include <string.h>
 #include <float.h>
-#include "ft_mini_pandas.h"
+#include <ft_maki.h>
+#include "include/ft_mini_pandas.h"
 
 void ft_ndarray_head(const ndarray *arr, int n) {
     int rows = arr->shape[0];
@@ -13,9 +14,9 @@ void ft_ndarray_head(const ndarray *arr, int n) {
 
     for (int i = 0; i < count; i++) {
         for (int j = 0; j < cols; j++) {
-            printf("%.2f ", data[i * cols + j]);
+            ft_printf("%.2f ", data[i * cols + j]);
         }
-        printf("\n");
+        ft_printf("\n");
     }
 }
 
@@ -28,9 +29,9 @@ void ft_ndarray_tail(const ndarray *arr, int n) {
 
     for (int i = start; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            printf("%.2f ", data[i * cols + j]);
+            ft_printf("%.2f ", data[i * cols + j]);
         }
-        printf("\n");
+        ft_printf("\n");
     }
 }
 
@@ -47,7 +48,7 @@ void ft_ndarray_describe(const ndarray *arr) {
             if (val > max) max = val;
             sum += val;
         }
-        printf("Col %d => Min: %.2f Max: %.2f Mean: %.2f\n", j, min, max, sum / rows);
+        ft_printf("Col %d => Min: %.2f Max: %.2f Mean: %.2f\n", j, min, max, sum / rows);
     }
 }
 
@@ -61,7 +62,7 @@ void ft_ndarray_sum_per_colunm(const ndarray *arr) {
         for (int i = 0; i < rows; i++) {
             sum += data[i * cols + j];
         }
-        printf("Sum of Col %d: %.2f\n", j, sum);
+        ft_printf("Sum of Col %d: %.2f\n", j, sum);
     }
 }
 
@@ -71,8 +72,8 @@ void ft_ndarray_isnan(const ndarray *arr) {
     double *data = (double *)arr->data;
 
     for (int i = 0; i < total; i++) {
-        if (isnan(data[i])) {
-            printf("NaN at index %d\n", i);
+        if (ft_isnan(data[i])) {
+            ft_printf("NaN at index %d\n", i);
         }
     }
 }
@@ -83,7 +84,7 @@ void ft_ndarray_fillna(ndarray *arr, double value) {
     double *data = (double *)arr->data;
 
     for (int i = 0; i < total; i++) {
-        if (isnan(data[i])) {
+        if (ft_isnan(data[i])) {
             data[i] = value;
         }
     }
@@ -112,7 +113,7 @@ void ft_ndarray_groupby_sum(const ndarray *arr, int group_col) {
     int cols = arr->shape[1];
     double *data = (double *)arr->data;
 
-    printf("Group By Column %d and Sum:\n", group_col);
+    ft_printf("Group By Column %d and Sum:\n", group_col);
     for (int i = 0; i < rows; i++) {
         double key = data[i * cols + group_col];
         double sum = 0;
@@ -121,7 +122,7 @@ void ft_ndarray_groupby_sum(const ndarray *arr, int group_col) {
                 sum += data[j * cols + group_col];
             }
         }
-        printf("Group %.2f => Sum: %.2f\n", key, sum);
+        ft_printf("Group %.2f => Sum: %.2f\n", key, sum);
     }
 }
 
@@ -147,7 +148,7 @@ ndarray ft_ndarray_read_csv(const char *filename) {
     FILE *file = fopen(filename, "r");
     if (!file) {
         perror("Error opening file");
-        exit(EXIT_FAILURE);
+        ft_exit(EXIT_FAILURE);
     }
 
     char line[1024];
@@ -156,11 +157,11 @@ ndarray ft_ndarray_read_csv(const char *filename) {
     // Count number of rows and columns
     while (fgets(line, sizeof(line), file)) {
         rows++;
-        char *token = strtok(line, ",");
+        char *token = ft_strtok(line, ",");
         int col_count = 0;
         while (token) {
             col_count++;
-            token = strtok(NULL, ",");
+            token = ft_strtok(NULL, ",");
         }
         if (cols == 0) {
             cols = col_count;
@@ -179,10 +180,10 @@ ndarray ft_ndarray_read_csv(const char *filename) {
 
     int index = 0;
     while (fgets(line, sizeof(line), file)) {
-        char *token = strtok(line, ",");
+        char *token = ft_strtok(line, ",");
         while (token) {
-            data[index++] = atof(token);
-            token = strtok(NULL, ",");
+            data[index++] = ft_atof(token);
+            token = ft_strtok(NULL, ",");
         }
     }
 
@@ -194,8 +195,8 @@ ndarray ft_ndarray_read_csv(const char *filename) {
 
 // Function to print shape, dtype and non-null count
 void ft_ndarray_info(const ndarray *arr) {
-    printf("Shape: (%d, %d)\n", arr->shape[0], arr->shape[1]);
-    printf("Data type: %.0zu bytes per element\n", arr->itemsize);
+    ft_printf("Shape: (%d, %d)\n", arr->shape[0], arr->shape[1]);
+    ft_printf("Data type: %.0zu bytes per element\n", arr->itemsize);
 
     int non_null_count = 0;
     for (int i = 0; i < arr->shape[0]; i++) {
@@ -206,7 +207,7 @@ void ft_ndarray_info(const ndarray *arr) {
             }
         }
     }
-    printf("Non-null values: %d\n", non_null_count);
+    ft_printf("Non-null values: %d\n", non_null_count);
 }
 
 // Function to access a specific column
