@@ -1,4 +1,4 @@
-#include "ft_mini_numpy.h"
+#include "include/ft_mini_numpy.h"
 
 ndarray *ft_ndarray_2d_transpose(ndarray *a) {
     if (!a || a->ndim != 2)
