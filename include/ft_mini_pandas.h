@@ -2,9 +2,9 @@
 #include <ft_maki.h>
 
 typedef double  (*apply_func)(double);
-// Para dados numéricos (int, float, double)
+// for data numbers(int, float, double)
 typedef void (*apply_func_numeric)(void *element, size_t itemsize);
-// Para strings (char*)
+// for strings (char*)
 typedef void (*apply_func_string)(char **element);
 
 double  ft_ndarray_get(const ndarray *arr, int row, int col);
