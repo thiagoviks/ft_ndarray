@@ -1,10 +1,16 @@
-#include <stdio.h>
-#include <stdlib.h>
+
 #include <math.h>
-#include <string.h>
-#include <float.h>
 #include <ft_maki.h>
 #include "../include/ft_mini_pandas.h"
+
+double ft_ndarray_get(const ndarray *arr, int row, int col);
+
+double ft_ndarray_get(const ndarray *arr, int row, int col) {
+    char *base = (char*)arr->data;
+    size_t offset = row * arr->strides[0] + col * arr->strides[1];
+    return *(double*)(base + offset);
+}
+
 
 void ft_ndarray_head(const ndarray *arr, int n) {
     int rows = arr->shape[0];
@@ -43,10 +49,14 @@ void ft_ndarray_describe(const ndarray *arr) {
     for (int j = 0; j < cols; j++) {
         double sum = 0, min = data[j], max = data[j];
         for (int i = 0; i < rows; i++) {
-            double val = data[i * cols + j];
-            if (val < min) min = val;
-            if (val > max) max = val;
-            sum += val;
+            //double val = data[i * cols + j];
+            double val = ft_ndarray_get(arr, i, cols);
+            if(!ft_isnan(val))
+            {
+                if (val < min) min = val;
+                if (val > max) max = val;
+                sum += val;
+            }
         }
         ft_printf("Col %d => Min: %.2f Max: %.2f Mean: %.2f\n", j, min, max, sum / rows);
     }
@@ -72,7 +82,7 @@ void ft_ndarray_isnan(const ndarray *arr) {
     double *data = (double *)arr->data;
 
     for (int i = 0; i < total; i++) {
-        if (isnan(data[i])) {
+        if (ft_isnan(data[i])) {
             ft_printf("NaN at index %d\n", i);
         }
     }
@@ -84,7 +94,7 @@ void ft_ndarray_fillna(ndarray *arr, double value) {
     double *data = (double *)arr->data;
 
     for (int i = 0; i < total; i++) {
-        if (isnan(data[i])) {
+        if (ft_isnan(data[i])) {
             data[i] = value;
         }
     }
@@ -182,7 +192,7 @@ ndarray ft_ndarray_read_csv(const char *filename) {
     while (fgets(line, sizeof(line), file)) {
         char *token = ft_strtok(line, ",");
         while (token) {
-            data[index++] = atof(token);
+            data[index++] = ft_atof(token);
             token = ft_strtok(NULL, ",");
         }
     }
