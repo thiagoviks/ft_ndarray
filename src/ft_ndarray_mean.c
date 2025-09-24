@@ -1,4 +1,4 @@
-#include "include/ft_mini_numpy.h"
+#include "../include/ft_mini_numpy.h"
 
 double ft_ndarray_mean(ndarray *arr) {
     int total_elements = 1;

@@ -1,4 +1,4 @@
-#include "include/ft_mini_numpy.h"
+#include "../include/ft_mini_numpy.h"
 
 void ft_scalar_multiply(ndarray *a, double scalar) {
     if (!a) return;

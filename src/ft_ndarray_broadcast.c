@@ -1,4 +1,4 @@
-#include "include/ft_mini_numpy.h"
+#include "../include/ft_mini_numpy.h"
 
 // Helper function to calculate the total number of elements in the ndarray based on its shape
 int ft_calculate_total_elements(int *shape, int ndim) {

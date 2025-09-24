@@ -1,4 +1,4 @@
-#include "include/ft_mini_numpy.h"
+#include "../include/ft_mini_numpy.h"
 
 t_slice ft_ndarray_slice(float *matrix, int total_cols, int start_row, int start_col, int num_rows, int num_cols) {
     t_slice s;

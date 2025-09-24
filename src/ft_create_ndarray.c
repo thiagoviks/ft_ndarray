@@ -1,4 +1,4 @@
-#include "include/ft_mini_numpy.h"
+#include "../include/ft_mini_numpy.h"
 
 ndarray *ft_create_ndarray(int *shape, int ndim, size_t itemsize) {
     ndarray *arr = ft_malloc(sizeof(ndarray));

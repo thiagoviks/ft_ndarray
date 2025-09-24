@@ -4,7 +4,7 @@
 #include <string.h>
 #include <float.h>
 #include <ft_maki.h>
-#include "include/ft_mini_pandas.h"
+#include "../include/ft_mini_pandas.h"
 
 void ft_ndarray_head(const ndarray *arr, int n) {
     int rows = arr->shape[0];
@@ -72,7 +72,7 @@ void ft_ndarray_isnan(const ndarray *arr) {
     double *data = (double *)arr->data;
 
     for (int i = 0; i < total; i++) {
-        if (ft_isnan(data[i])) {
+        if (isnan(data[i])) {
             ft_printf("NaN at index %d\n", i);
         }
     }
@@ -84,7 +84,7 @@ void ft_ndarray_fillna(ndarray *arr, double value) {
     double *data = (double *)arr->data;
 
     for (int i = 0; i < total; i++) {
-        if (ft_isnan(data[i])) {
+        if (isnan(data[i])) {
             data[i] = value;
         }
     }
@@ -182,7 +182,7 @@ ndarray ft_ndarray_read_csv(const char *filename) {
     while (fgets(line, sizeof(line), file)) {
         char *token = ft_strtok(line, ",");
         while (token) {
-            data[index++] = ft_atof(token);
+            data[index++] = atof(token);
             token = ft_strtok(NULL, ",");
         }
     }
@@ -256,7 +256,6 @@ void ft_ndarray_drop(ndarray *arr, int index, int axis) {
 
 // Function to access a row by label
 ndarray *ft_ndarray_loc(const ndarray *arr, int label) {
-    int rows = arr->shape[0];
     double *row_data = (double *)ft_malloc(arr->shape[1] * sizeof(double));
 
     for (int i = 0; i < arr->shape[1]; i++) {

@@ -1,4 +1,4 @@
-#include "include/ft_mini_numpy.h"
+#include "../include/ft_mini_numpy.h"
 
 ndarray* ft_ndarray_reshape(ndarray *arr, int *new_shape, int new_ndim) {
     int total_elements = 1;

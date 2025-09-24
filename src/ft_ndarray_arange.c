@@ -1,4 +1,4 @@
-#include "include/ft_mini_numpy.h"
+#include "../include/ft_mini_numpy.h"
 
 ndarray* ft_ndarray_arange(int start, int stop, int step, int *shape, int ndim, size_t itemsize) {
     int size = (stop - start) / step;

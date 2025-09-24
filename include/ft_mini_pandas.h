@@ -1,4 +1,5 @@
 #include "ft_mini_numpy.h"
+#include <ft_maki.h>
 
 typedef double (*apply_func)(double);
 
