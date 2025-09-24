@@ -24,19 +24,19 @@ int main() {
 //     }
 
 //     // Print initial arrays
-//     printf("Array 1: ");
+//     ft_printf("Array 1: ");
 //     ft_print_ndarray(arr1, 'i');
-//     printf("Array 2: ");
+//     ft_printf("Array 2: ");
 //     ft_print_ndarray(arr2, 'i');
 
 //     // Perform element-wise addition
 //     ft_add_ndarrays(arr1, arr2, result);
-//     printf("Sum: ");
+//     ft_printf("Sum: ");
 //     ft_print_ndarray(result, 'i');
 
 //     // Perform scalar multiplication
 //     ft_scalar_multiply(arr1, 2.5);
-//     printf("Array 1 after scalar multiplication: ");
+//     ft_printf("Array 1 after scalar multiplication: ");
 //     ft_print_ndarray(arr1, 'i');
 
 //     // Free 2D arrays
@@ -54,19 +54,19 @@ int main() {
 //     ft_memcpy(vec2->data, values2, sizeof(values2));
 
 //     // Compute and print dot product
-//     printf("Dot product: %.2f\n", ft_dot_product(vec1, vec2));
+//     ft_printf("Dot product: %.2f\n", ft_dot_product(vec1, vec2));
 
 //     // Create and initialize 2D matrix for transpose
 //     ndarray *matrix = ft_create_ndarray(shape2D, 2, sizeof(int));
 //     int valuesMatrix[] = {1, 2, 3, 4, 5, 6};
 //     ft_memcpy(matrix->data, valuesMatrix, sizeof(valuesMatrix));
 
-//     printf("Original matrix:\n");
+//     ft_printf("Original matrix:\n");
 //     ft_print_ndarray(matrix, 'i');
 
 //     // Compute and print transposed matrix
 //     ndarray *transposed = ft_ndarray_2d_transpose(matrix);
-//     printf("Transposed matrix:\n");
+//     ft_printf("Transposed matrix:\n");
 //     ft_print_ndarray(transposed, 'i');
 
 //     // Free remaining arrays
@@ -82,12 +82,12 @@ int main() {
 //     };
 
 //     t_slice s = ft_ndarray_slice(&f_matrix[0][0], 4, 1, 1, 2, 2);
-//     printf("Sliced matrix:\n");
+//     ft_printf("Sliced matrix:\n");
 //     for (int i = 0; i < s.rows; i++) {
 //         for (int j = 0; j < s.cols; j++) {
-//             printf("%.0f ", ft_slice_get(&s, i, j));
+//             ft_printf("%.0f ", ft_slice_get(&s, i, j));
 //         }
-//         printf("\n");
+//         ft_printf("\n");
 //     }
 
 //     int shape[2] = {4, 4};
@@ -104,9 +104,9 @@ int main() {
 //         for (int j = 0; j < v.shape[1]; j++) {
 //             int indices[2] = {i, j};
 //             int *val = (int *)ft_get_view_element(&v, indices);
-//             printf("%d ", *val);
+//             ft_printf("%d ", *val);
 //         }
-//         printf("\n");
+//         ft_printf("\n");
 //     }
 
 //     int shape4[2] = {4, 4};
@@ -124,7 +124,7 @@ int main() {
 
 // ndarray_view *view4 = ft_create_view(arr4, start4, end4);
 // ft_print_view(view4, 'i');
-// printf("%.4f", ft_ndarray_mean(arr4));
+// ft_printf("%.4f", ft_ndarray_mean(arr4));
 
 // ft_free_view(view4);
 // // ft_free_ndarray(arr4);
@@ -173,36 +173,36 @@ int main() {
 //     .strides = strides
 // };
 
-// printf("Head:\n");
+// ft_printf("Head:\n");
 // ft_ndarray_head(&arr, 3);
 
-// printf("\nTail:\n");
+// ft_printf("\nTail:\n");
 // ft_ndarray_tail(&arr, 2);
 
-// printf("\nDescribe:\n");
+// ft_printf("\nDescribe:\n");
 // ft_ndarray_describe(&arr);
 
-// printf("\nSum:\n");
+// ft_printf("\nSum:\n");
 // ft_ndarray_sum_per_colunm(&arr);
 
-// printf("\nIs NaN:\n");
+// ft_printf("\nIs NaN:\n");
 // ft_ndarray_isnan(&arr);
 
-// printf("\nFill NaN with 0:\n");
+// ft_printf("\nFill NaN with 0:\n");
 // ft_ndarray_fillna(&arr, 0.0);
 // ft_ndarray_head(&arr, 5);
 
-// printf("\nSum after fillna:\n");
+// ft_printf("\nSum after fillna:\n");
 // ft_ndarray_sum_per_colunm(&arr);
 
-// printf("\nSort by column 1:\n");
+// ft_printf("\nSort by column 1:\n");
 // ft_ndarray_sort(&arr, 1);
 // ft_ndarray_head(&arr, 5);
 
-// printf("\nGroupby sum on column 0:\n");
+// ft_printf("\nGroupby sum on column 0:\n");
 // ft_ndarray_groupby_sum(&arr, 0);
 
-// printf("\nApply square function:\n");
+// ft_printf("\nApply square function:\n");
 // ft_ndarray_apply(&arr, ft_square);
 // ft_ndarray_head(&arr, 5);
 
@@ -223,24 +223,24 @@ int main() {
 
    // Access column 1
    ndarray *col = ft_ndarray_column(&arr, 1);
-   printf("Column 1:\n");
+   ft_printf("Column 1:\n");
    ft_print_ndarray(col, 'i');
    ft_free_ndarray(col);
 
    // Drop the first row
    ft_ndarray_drop(&arr, 0, 0);  // Drop row
-   printf("After dropping first row:\n");
+   ft_printf("After dropping first row:\n");
    ft_print_ndarray(&arr, 'i');
 
    // Access row by label (label 2)
    ndarray *row = ft_ndarray_loc(&arr, 2);
-   printf("Row 2:\n");
+   ft_printf("Row 2:\n");
    ft_print_ndarray(row, 'i');
    ft_free_ndarray(row);
 
    // Access row by index (index 3)
    ndarray *row2 = ft_ndarray_iloc(&arr, 3);
-   printf("Row 3 (iloc):\n");
+   ft_printf("Row 3 (iloc):\n");
    ft_print_ndarray(row2, 'i');
    ft_free_ndarray(row2);
 
