@@ -1,6 +1,18 @@
 #include "ft_mini_numpy.h"
 #include <ft_maki.h>
 
+typedef struct {
+    char *name;
+    ndarray *data; // each column is an independent ndarray
+	char type; 	// 'i' = int, 'f' = double, 's' = string
+} df_column;
+
+typedef struct {
+    df_column *columns;
+    int ncols;
+    int nrows;
+} dataframe;
+
 typedef double  (*apply_func)(double);
 // for data numbers(int, float, double)
 typedef void (*apply_func_numeric)(void *element, size_t itemsize);
@@ -33,5 +45,6 @@ void    ft_ndarray_drop(ndarray *arr, int index, int axis);
 ndarray *ft_ndarray_loc(const ndarray *arr, int label);
 ndarray *ft_ndarray_iloc(const ndarray *arr, int index);
 
-//for internal use of ft_ndarray_describe
-//double ft_ndarray_get(const ndarray *arr, int row, int col);
+dataframe   *df_create(char **col_names, char *types, int ncols, int nrows);
+void    df_print(dataframe *df);
+void    df_free(dataframe *df);

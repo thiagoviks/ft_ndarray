@@ -428,3 +428,59 @@ ndarray *ft_ndarray_loc(const ndarray *arr, int label) {
 ndarray *ft_ndarray_iloc(const ndarray *arr, int index) {
     return ft_ndarray_loc(arr, index);
 }
+
+dataframe *df_create(char **col_names, char *types, int ncols, int nrows) {
+    dataframe *df = ft_malloc(sizeof(dataframe));
+    df->ncols = ncols;
+    df->nrows = nrows;
+    df->columns = ft_malloc(sizeof(df_column) * ncols);
+
+    for (int i = 0; i < ncols; i++) {
+        int shape[1] = {nrows};
+        df->columns[i].name = ft_strdup(col_names[i]);
+        df->columns[i].type = types[i];
+
+        size_t itemsize = (types[i] == 'i') ? sizeof(int) :
+                          (types[i] == 'f') ? sizeof(double) :
+                          sizeof(char*); // string = pointer
+        df->columns[i].data = ft_create_ndarray(shape, 1, itemsize);
+    }
+    return df;
+}
+
+// Print the DataFrame
+void df_print(dataframe *df) {
+    // Header
+    for (int c = 0; c < df->ncols; c++) {
+        ft_printf("%-10s ", df->columns[c].name);
+    }
+    ft_printf("\n");
+
+    // Lines
+    for (int r = 0; r < df->nrows; r++) {
+        for (int c = 0; c < df->ncols; c++) {
+            df_column col = df->columns[c];
+            if (col.type == 'i') {
+                int val = ((int*)col.data->data)[r];
+                ft_printf("%-10d ", val);
+            } else if (col.type == 'f') {
+                double val = ((double*)col.data->data)[r];
+                ft_printf("%-10.2f ", val);
+            } else if (col.type == 's') {
+                char *val = ((char**)col.data->data)[r];
+                ft_printf("%-10s ", val);
+            }
+        }
+        ft_printf("\n");
+    }
+}
+
+// Frees DataFrame memory
+void df_free(dataframe *df) {
+    for (int i = 0; i < df->ncols; i++) {
+        ft_free(df->columns[i].name);
+        ft_free_ndarray(df->columns[i].data);
+    }
+    ft_free(df->columns);
+    ft_free(df);
+}
