@@ -3,7 +3,7 @@
 double ft_ndarray_mean(ndarray *arr) {
     if (arr->itemsize != sizeof(double)) {
         fprintf(stderr, "ft_ndarray_mean: column is not of type double\n");
-        return 0.0;
+        return (0.0);
     }
 
     int total_elements = 1;
@@ -16,5 +16,5 @@ double ft_ndarray_mean(ndarray *arr) {
     for (int i = 0; i < total_elements; i++) {
         sum += data[i];
     }
-    return sum / total_elements;
+    return (sum / total_elements);
 }

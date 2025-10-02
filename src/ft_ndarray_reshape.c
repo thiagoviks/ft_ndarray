@@ -11,10 +11,10 @@ ndarray* ft_ndarray_reshape(ndarray *arr, int *new_shape, int new_ndim) {
     }
     if (current_total_elements != total_elements) {
         // Ensure the total number of elements is the same
-        return NULL;
+        return (FT_NULL);
     }
 
     ndarray* reshaped_arr = ft_create_ndarray(new_shape, new_ndim, arr->itemsize);
     ft_memcpy(reshaped_arr->data, arr->data, total_elements * arr->itemsize);
-    return reshaped_arr;
+    return (reshaped_arr);
 }

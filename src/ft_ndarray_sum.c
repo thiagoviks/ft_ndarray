@@ -54,5 +54,5 @@ double ft_ndarray_sum(ndarray *arr) {
         sum += *((double *)ptr);
     }
 
-    return sum;
+    return (sum);
 }

@@ -20,5 +20,5 @@ ndarray* ft_create_ndarray_with_strides(int *shape, int ndim, size_t itemsize) {
 
     int total_elements = stride;
     arr->data = ft_malloc(total_elements * itemsize);
-    return arr;
+    return (arr);
 }

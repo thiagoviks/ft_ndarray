@@ -47,8 +47,9 @@ int *ft_ndarray_broadcast(ndarray *a, ndarray *b) {
 ndarray *ft_ndarray_add(ndarray *a, ndarray *b) {
     // Ensure that the shapes are broadcast-compatible
     int *broadcast_shape = ft_ndarray_broadcast(a, b);
-    if (broadcast_shape == NULL) {
-        return NULL;
+    if (broadcast_shape == (FT_NULL))
+    {
+        return (FT_NULL);
     }
 
     int total_elements = ft_calculate_total_elements(broadcast_shape, a->ndim > b->ndim ? a->ndim : b->ndim);
@@ -87,7 +88,7 @@ ndarray *ft_ndarray_add(ndarray *a, ndarray *b) {
         }
     }
 
-    return result;
+    return (result);
 }
 
 // // Helper function to print ndarray

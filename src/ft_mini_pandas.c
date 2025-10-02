@@ -5,7 +5,7 @@
 double ft_ndarray_get(const ndarray *arr, int row, int col) {
     char *base = (char*)arr->data;
     size_t offset = row * arr->strides[0] + col * arr->strides[1];
-    return *(double*)(base + offset);
+    return (*(double*)(base + offset));
 }
 
 
@@ -148,7 +148,7 @@ void ft_ndarray_apply(ndarray *arr, apply_func func) {
     }
 }
 
-// Aplica função numérica
+// Apply numeric function
 void ft_ndarray_apply_numeric(ndarray *arr, apply_func_numeric func) {
     int total = 1;
     for (int i = 0; i < arr->ndim; i++) total *= arr->shape[i];
@@ -161,7 +161,7 @@ void ft_ndarray_apply_numeric(ndarray *arr, apply_func_numeric func) {
     }
 }
 
-// Aplica função de string
+// Apply string function
 void ft_ndarray_apply_string(ndarray *arr, apply_func_string func) {
     if (arr->itemsize != sizeof(char *)) {
         fprintf(stderr, "ft_apply_string: itemsize inválido (esperado char*)\n");
@@ -179,10 +179,10 @@ void ft_ndarray_apply_string(ndarray *arr, apply_func_string func) {
 }
 
 double ft_ndarray_square(double x) {
-    return x * x;
+    return (x * x);
 }
 
-// Square genérico
+// Square generic
 void ft_ndarray_square_num(void *element, size_t itemsize) {
     if (itemsize == sizeof(int)) {
         int *x = (int *)element;
@@ -196,7 +196,7 @@ void ft_ndarray_square_num(void *element, size_t itemsize) {
     }
 }
 
-// Incrementa +1 genérico
+// Increment +1 generic
 void ft_ndarray_increment_num(void *element, size_t itemsize) {
     if (itemsize == sizeof(int)) {
         (*(int *)element)++;
@@ -236,7 +236,7 @@ void ft_ndarray_fillna_string(char **element) {
 
 // CSV-aware tokenizer (handles quoted fields with commas inside)
 static char *ft_csv_next_token(char **line) {
-    if (!line || !*line) return NULL;
+    if (!line || !*line) return (FT_NULL);
 
     char *start = *line;
     char *p = start;
@@ -249,19 +249,18 @@ static char *ft_csv_next_token(char **line) {
             // End of token
             *p = '\0';
             *line = p + 1;
-            return start;
+            return (start);
         }
         p++;
     }
-
     // Last token in the line
-    *line = NULL;
+    *line = FT_NULL;
     return start;
 }
 
 // Helper: trim spaces and surrounding quotes
 static char *ft_csv_clean_field(char *token) {
-    if (!token) return NULL;
+    if (!token) return (FT_NULL);
 
     // Trim leading spaces
     while (*token == ' ' || *token == '\t' || *token == '\n') token++;
@@ -277,7 +276,7 @@ static char *ft_csv_clean_field(char *token) {
         token++;
     }
 
-    return token;
+    return (token);
 }
 
 ndarray ft_ndarray_read_csv(const char *filename) {
@@ -335,7 +334,7 @@ ndarray ft_ndarray_read_csv(const char *filename) {
     fclose(file);
 
     ndarray arr = {data, shape, 2, sizeof(double), strides};
-    return arr;
+    return (arr);
 }
 
 
@@ -377,7 +376,7 @@ ndarray *ft_ndarray_column(const ndarray *arr, int column) {
     col->itemsize = sizeof(double);
     col->strides = strides;
 
-    return col;
+    return (col);
 }
 
 // Function to drop rows or columns
@@ -420,12 +419,12 @@ ndarray *ft_ndarray_loc(const ndarray *arr, int label) {
     row->itemsize = sizeof(double);
     row->strides = strides;
 
-    return row;
+    return (row);
 }
 
 // Function to access a row by index
 ndarray *ft_ndarray_iloc(const ndarray *arr, int index) {
-    return ft_ndarray_loc(arr, index);
+    return (ft_ndarray_loc(arr, index));
 }
 
 dataframe *df_create(char **col_names, char *types, int ncols, int nrows) {
@@ -444,7 +443,7 @@ dataframe *df_create(char **col_names, char *types, int ncols, int nrows) {
                           sizeof(char*); // string = pointer
         df->columns[i].data = ft_create_ndarray(shape, 1, itemsize);
     }
-    return df;
+    return (df);
 }
 
 // Print the DataFrame

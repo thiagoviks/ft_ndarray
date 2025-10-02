@@ -2,13 +2,13 @@
 
 ndarray *ft_create_ndarray(int *shape, int ndim, size_t itemsize) {
     ndarray *arr = ft_malloc(sizeof(ndarray));
-    if (!arr) return NULL;
+    if (!arr) return (FT_NULL);
 
     arr->ndim = ndim;
     arr->shape = ft_malloc(sizeof(int) * ndim);
     if (!arr->shape) {
         ft_free(arr);
-        return NULL;
+        return (FT_NULL);
     }
 
     size_t total_size = 1;
@@ -23,8 +23,8 @@ ndarray *ft_create_ndarray(int *shape, int ndim, size_t itemsize) {
     if (!arr->data) {
         ft_free(arr->shape);
         ft_free(arr);
-        return NULL;
+        return (FT_NULL);
     }
     
-    return arr;
+    return (arr);
 }

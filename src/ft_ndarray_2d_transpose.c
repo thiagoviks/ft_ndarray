@@ -2,12 +2,15 @@
 
 ndarray *ft_ndarray_2d_transpose(ndarray *a) {
     if (!a || a->ndim != 2)
-        return NULL; // Only 2D matrices are supported
+    {
+        // Only 2D matrices are supported
+        return (FT_NULL);
+    }
 
     int new_shape[2] = {a->shape[1], a->shape[0]};
     ndarray *result = ft_create_ndarray(new_shape, 2, a->itemsize);
     if (!result)
-        return NULL;
+        return (FT_NULL);
 
     int rows = a->shape[0];
     int cols = a->shape[1];
@@ -29,5 +32,5 @@ ndarray *ft_ndarray_2d_transpose(ndarray *a) {
             }
         }
     }
-    return result;
+    return (result);
 }

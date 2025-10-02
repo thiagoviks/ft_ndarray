@@ -6,8 +6,10 @@ ndarray* ft_ndarray_ones(int *shape, int ndim, size_t itemsize) {
     for (int i = 0; i < ndim; i++) {
         total_elements *= shape[i];
     }
-    for (int i = 0; i < total_elements; i++) {
-        *((int*)arr->data + i) = 1;  // Cast to the proper type based on itemsize
+    for (int i = 0; i < total_elements; i++) 
+    {
+        // Cast to the proper type based on itemsize
+        *((int*)arr->data + i) = 1;  
     }
-    return arr;
+    return (arr);
 }

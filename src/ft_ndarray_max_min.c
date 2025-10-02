@@ -12,7 +12,7 @@ int ft_ndarray_max(ndarray *arr) {
             max_val = value;
         }
     }
-    return max_val;
+    return (max_val);
 }
 
 int ft_ndarray_min(ndarray *arr) {
@@ -27,5 +27,5 @@ int ft_ndarray_min(ndarray *arr) {
             min_val = value;
         }
     }
-    return min_val;
+    return (min_val);
 }

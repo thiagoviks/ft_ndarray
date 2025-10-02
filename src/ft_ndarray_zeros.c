@@ -7,5 +7,5 @@ ndarray* ft_ndarray_zeros(int *shape, int ndim, size_t itemsize) {
         total_elements *= shape[i];
     }
     ft_memset(arr->data, 0, total_elements * itemsize);
-    return arr;
+    return (arr);
 }

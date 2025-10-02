@@ -1,8 +1,10 @@
 #include "../include/ft_mini_numpy.h"
 
 ndarray* ft_ndarray_concatenate(ndarray *a, ndarray *b) {
-    if (a->shape[0] != b->shape[0]) {
-        return NULL;  // Only works for arrays with the same first dimension
+    if (a->shape[0] != b->shape[0])
+    {
+        // Only works for arrays with the same first dimension
+        return (FT_NULL);  
     }
     int new_shape[2] = {a->shape[0], a->shape[1] + b->shape[1]};
     ndarray *result = ft_create_ndarray(new_shape, 2, a->itemsize);
@@ -14,5 +16,5 @@ ndarray* ft_ndarray_concatenate(ndarray *a, ndarray *b) {
             *((int*)result->data + i * new_shape[1] + a->shape[1] + j) = *((int*)b->data + i * b->shape[1] + j);
         }
     }
-    return result;
+    return (result);
 }
