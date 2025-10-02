@@ -5,8 +5,6 @@
 #include <stdio.h>
 #include <ft_maki.h>
 
-#define BLOCK_SIZE sizeof(t_block)
-
 typedef struct {
     void *data;        // Pointer to raw data
     int *shape;        // Array dimensions
@@ -30,15 +28,6 @@ typedef struct {
     int cols;
     int stride; // how many elements to skip to go to the next row
 } t_slice;
-
-// Memory Pool Management
-typedef struct memory_pool {
-    void *memory;     // Pointer to the allocated memory block
-    size_t size;      // Total size of the memory block
-    size_t used;      // Amount of memory used
-    struct memory_pool *next;
-} memory_pool;
-
 
 t_slice ft_ndarray_slice(float *matrix, int total_cols, int start_row, int start_col, int num_rows, int num_cols);
 float ft_slice_get(t_slice *s, int row, int col);
