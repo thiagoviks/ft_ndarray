@@ -1,3 +1,6 @@
+#ifndef FT_MINI_PANDAS_H
+#define FT_MINI_PANDAS_H
+
 #include "ft_mini_numpy.h"
 #include <ft_maki.h>
 
@@ -48,3 +51,5 @@ ndarray *ft_ndarray_iloc(const ndarray *arr, int index);
 dataframe   *df_create(char **col_names, char *types, int ncols, int nrows);
 void    df_print(dataframe *df);
 void    df_free(dataframe *df);
+
+#endif
