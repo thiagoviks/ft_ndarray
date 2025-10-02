@@ -4,6 +4,10 @@
 #include "ft_mini_numpy.h"
 #include <ft_maki.h>
 
+#ifndef FT_NAN
+# define FT_NAN (0.0/0.0)
+#endif
+
 typedef struct {
     char *name;
     ndarray *data; // each column is an independent ndarray

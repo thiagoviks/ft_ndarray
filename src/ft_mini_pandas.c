@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <math.h>
 #include <ft_maki.h>
 #include "../include/ft_mini_pandas.h"
 
@@ -349,7 +348,7 @@ void ft_ndarray_info(const ndarray *arr) {
     for (int i = 0; i < arr->shape[0]; i++) {
         for (int j = 0; j < arr->shape[1]; j++) {
             double *elem = (double *)arr->data + i * arr->strides[0] / arr->itemsize + j * arr->strides[1] / arr->itemsize;
-            if (*elem != NAN) {
+            if (*elem != FT_NAN) {
                 non_null_count++;
             }
         }
