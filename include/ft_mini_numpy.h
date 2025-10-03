@@ -53,8 +53,6 @@ ndarray *ft_ndarray_add(ndarray *a, ndarray *b);
 int *ft_ndarray_broadcast(ndarray *a, ndarray *b);
 int ft_calculate_total_elements(int *shape, int ndim);
 ndarray* ft_create_ndarray_with_strides(int *shape, int ndim, size_t itemsize);
-void ft_memory_pool_free();
-void *ft_memory_pool_alloc(size_t size);
 
 // New slicing functions
 void *ft_get_from_view(ndarray_view *view, int *indices);
