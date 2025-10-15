@@ -1,6 +1,6 @@
 #include "../include/ft_mini_numpy.h"
 
-ndarray *ft_create_ndarray(int *shape, int ndim, size_t itemsize) {
+ndarray *ft_create_ndarray(int *shape, int ndim, ft_size_t itemsize) {
     ndarray *arr = ft_malloc(sizeof(ndarray));
     if (!arr) return (FT_NULL);
 
@@ -11,7 +11,7 @@ ndarray *ft_create_ndarray(int *shape, int ndim, size_t itemsize) {
         return (FT_NULL);
     }
 
-    size_t total_size = 1;
+    ft_size_t total_size = 1;
     for (int i = 0; i < ndim; i++) {
         arr->shape[i] = shape[i];
         total_size *= shape[i];

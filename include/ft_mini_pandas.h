@@ -22,7 +22,7 @@ typedef struct {
 
 typedef double  (*apply_func)(double);
 // for data numbers(int, float, double)
-typedef void (*apply_func_numeric)(void *element, size_t itemsize);
+typedef void (*apply_func_numeric)(void *element, ft_size_t itemsize);
 // for strings (char*)
 typedef void (*apply_func_string)(char **element);
 
@@ -39,8 +39,8 @@ void    ft_ndarray_apply(ndarray *arr, apply_func func);
 void    ft_ndarray_apply_numeric(ndarray *arr, apply_func_numeric func);
 void    ft_ndarray_apply_string(ndarray *arr, apply_func_string func);
 double  ft_ndarray_square(double x);
-void    ft_ndarray_square_num(void *element, size_t itemsize);
-void    ft_ndarray_increment_num(void *element, size_t itemsize);
+void    ft_ndarray_square_num(void *element, ft_size_t itemsize);
+void    ft_ndarray_increment_num(void *element, ft_size_t itemsize);
 void    ft_ndarray_strtoupper(char **element);
 void    ft_ndarray_strtolower(char **element);
 void    ft_ndarray_fillna_string(char **element);

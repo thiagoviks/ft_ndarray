@@ -2,18 +2,18 @@
 
 void ft_print_ndarray(ndarray *arr, char type) {
     if (!arr) return;
-    size_t total_size = 1;
+    ft_size_t total_size = 1;
     for (int i = 0; i < arr->ndim; i++)
         total_size *= arr->shape[i];
 
     ft_printf("[");
     if (type == 'i') { // Integer array
         int *data = (int *)arr->data;
-        for (size_t i = 0; i < total_size; i++)
+        for (ft_size_t i = 0; i < total_size; i++)
             ft_printf("%d ", data[i]);
     } else if (type == 'd') { // Double array
         double *data = (double *)arr->data;
-        for (size_t i = 0; i < total_size; i++)
+        for (ft_size_t i = 0; i < total_size; i++)
             ft_printf("%.2f ", data[i]);
     }
     ft_printf("]\n");

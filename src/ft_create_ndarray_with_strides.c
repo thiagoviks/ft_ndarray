@@ -1,6 +1,6 @@
 #include "../include/ft_mini_numpy.h"
 
-ndarray* ft_create_ndarray_with_strides(int *shape, int ndim, size_t itemsize) {
+ndarray* ft_create_ndarray_with_strides(int *shape, int ndim, ft_size_t itemsize) {
     ndarray* arr = (ndarray*) ft_malloc(sizeof(ndarray));
     arr->shape = (int*) ft_malloc(ndim * sizeof(int));
     arr->strides = (int*) ft_malloc(ndim * sizeof(int));

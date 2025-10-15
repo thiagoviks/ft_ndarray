@@ -4,7 +4,7 @@
 
 double ft_ndarray_get(const ndarray *arr, int row, int col) {
     char *base = (char*)arr->data;
-    size_t offset = row * arr->strides[0] + col * arr->strides[1];
+    ft_size_t offset = row * arr->strides[0] + col * arr->strides[1];
     return (*(double*)(base + offset));
 }
 
@@ -183,7 +183,7 @@ double ft_ndarray_square(double x) {
 }
 
 // Square generic
-void ft_ndarray_square_num(void *element, size_t itemsize) {
+void ft_ndarray_square_num(void *element, ft_size_t itemsize) {
     if (itemsize == sizeof(int)) {
         int *x = (int *)element;
         *x = (*x) * (*x);
@@ -197,7 +197,7 @@ void ft_ndarray_square_num(void *element, size_t itemsize) {
 }
 
 // Increment +1 generic
-void ft_ndarray_increment_num(void *element, size_t itemsize) {
+void ft_ndarray_increment_num(void *element, ft_size_t itemsize) {
     if (itemsize == sizeof(int)) {
         (*(int *)element)++;
     } else if (itemsize == sizeof(float)) {
@@ -438,7 +438,7 @@ dataframe *df_create(char **col_names, char *types, int ncols, int nrows) {
         df->columns[i].name = ft_strdup(col_names[i]);
         df->columns[i].type = types[i];
 
-        size_t itemsize = (types[i] == 'i') ? sizeof(int) :
+        ft_size_t itemsize = (types[i] == 'i') ? sizeof(int) :
                           (types[i] == 'f') ? sizeof(double) :
                           sizeof(char*); // string = pointer
         df->columns[i].data = ft_create_ndarray(shape, 1, itemsize);

@@ -23,7 +23,7 @@ ndarray_view ft_slice_ndarray(ndarray *arr, int start[], int end[]) {
     view.strides = (int *)ft_malloc(sizeof(int) * view.ndim);
 
     // Calculate shape and strides
-    size_t offset = 0;
+    ft_size_t offset = 0;
     for (int i = 0; i < view.ndim; i++) {
         view.shape[i] = end[i] - start[i];
         view.strides[i] = arr->itemsize;
@@ -56,7 +56,7 @@ void *ft_ndarray_view_get(const ndarray_view *view, int row, int col) {
 }
 
 void *ft_get_view_element(ndarray_view *view, int indices[]) {
-    size_t offset = 0;
+    ft_size_t offset = 0;
     for (int i = 0; i < view->ndim; i++) {
         offset += indices[i] * view->strides[i];
     }
@@ -72,13 +72,13 @@ ndarray_view *ft_create_view(ndarray *original, int *start, int *end) {
 
     if (!new_shape || !strides) return (FT_NULL);
 
-    size_t stride = original->itemsize;
+    ft_size_t stride = original->itemsize;
     for (int i = ndim - 1; i >= 0; i--) {
         strides[i] = stride;
         stride *= original->shape[i];
     }
 
-    size_t offset = 0;
+    ft_size_t offset = 0;
     for (int i = 0; i < ndim; i++) {
         if (start[i] < 0 || end[i] > original->shape[i] || start[i] >= end[i]) {
             ft_free(new_shape);
@@ -102,7 +102,7 @@ ndarray_view *ft_create_view(ndarray *original, int *start, int *end) {
 
 void *ft_get_from_view(ndarray_view *view, int *indices) {
     char *data_ptr = (char *)view->data;
-    size_t offset = 0;
+    ft_size_t offset = 0;
     for (int i = 0; i < view->ndim; i++) {
         offset += indices[i] * view->strides[i];
     }
