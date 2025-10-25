@@ -1,35 +1,35 @@
 #ifndef FT_MINI_NUMPY_H
 #define FT_MINI_NUMPY_H
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <ft_maki.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef struct {
-    void *data;        // Pointer to raw data
-    int *shape;        // Array dimensions
-    int ndim;          // Number of dimensions
-    ft_size_t itemsize;   // Size of each element (e.g., sizeof(int))
-    int *strides;      // Strides for each dimension
+  void *data;         // Pointer to raw data
+  int *shape;         // Array dimensions
+  int ndim;           // Number of dimensions
+  ft_size_t itemsize; // Size of each element (e.g., sizeof(int))
+  int *strides;       // Strides for each dimension
 } ndarray;
 
 typedef struct {
-    void *data;
-    int *shape;
-    int ndim;
-    ft_size_t itemsize;
-    int *strides; // how many bytes to skip for each dimension
+  void *data;
+  int *shape;
+  int ndim;
+  ft_size_t itemsize;
+  int *strides; // how many bytes to skip for each dimension
 } ndarray_view;
 
-
 typedef struct {
-    float *data;
-    int rows;
-    int cols;
-    int stride; // how many elements to skip to go to the next row
+  float *data;
+  int rows;
+  int cols;
+  int stride; // how many elements to skip to go to the next row
 } t_slice;
 
-t_slice ft_ndarray_slice(float *matrix, int total_cols, int start_row, int start_col, int num_rows, int num_cols);
+t_slice ft_ndarray_slice(float *matrix, int total_cols, int start_row,
+                         int start_col, int num_rows, int num_cols);
 float ft_slice_get(t_slice *s, int row, int col);
 
 // Function prototypes
@@ -45,14 +45,15 @@ ndarray *ft_ndarray_2d_transpose(ndarray *a);
 ndarray_view *ft_create_view(ndarray *original, int *start, int *shape);
 void ft_free_view(ndarray_view *view);
 void ft_print_view(ndarray_view *view, char type);
-//More Slice API
+// More Slice API
 double ft_ndarray_sum(ndarray *arr);
 double ft_ndarray_mean(ndarray *arr);
-ndarray* ft_ndarray_1d_slice(ndarray *arr, int start, int end);
+ndarray *ft_ndarray_1d_slice(ndarray *arr, int start, int end);
 ndarray *ft_ndarray_add(ndarray *a, ndarray *b);
 int *ft_ndarray_broadcast(ndarray *a, ndarray *b);
 int ft_calculate_total_elements(int *shape, int ndim);
-ndarray* ft_create_ndarray_with_strides(int *shape, int ndim, ft_size_t itemsize);
+ndarray *ft_create_ndarray_with_strides(int *shape, int ndim,
+                                        ft_size_t itemsize);
 
 // New slicing functions
 void *ft_get_from_view(ndarray_view *view, int *indices);
