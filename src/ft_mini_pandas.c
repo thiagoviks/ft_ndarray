@@ -1,4 +1,4 @@
-#include "../include/ft_mini_pandas.h"
+#include "../include/ft_ndarray.h"
 #include <ft_maki.h>
 
 double ft_ndarray_get(const ndarray *arr, int row, int col) {
@@ -289,64 +289,64 @@ static char *ft_csv_clean_field(char *token) {
   return (token);
 }
 
-// ndarray ft_ndarray_read_csv(const char *filename) {
-//   T_FT_FILE *file = ft_fopen(filename, "r");
-//   if (!file) {
-//     ft_perror("Error opening file");
-//     ft_exit(FT_EXIT_FAILURE);
-//   }
+ndarray ft_ndarray_read_csv(const char *filename) {
+  T_FT_FILE *file = ft_fopen(filename, "r");
+  if (!file) {
+    ft_perror("Error opening file");
+    ft_exit(FT_EXIT_FAILURE);
+  }
 
-//   char line[4096]; // large enough buffer for long rows
-//   int rows = 0, cols = 0;
+  char line[4096]; // large enough buffer for long rows
+  int rows = 0, cols = 0;
 
-//   // First pass: count rows and validate column count
-//   while (ft_fgets(line, sizeof(line), file)) {
-//     int col_count = 0;
-//     char *cursor = line;
-//     char *token = ft_csv_next_token(&cursor);
-//     while (token) {
-//       col_count++;
-//       token = ft_csv_next_token(&cursor);
-//     }
-//     if (cols == 0) {
-//       cols = col_count; // set initial number of columns
-//     } else if (col_count != cols) {
-//       ft_fprintf(ft_stderr, "Inconsistent number of columns at row %d\n",
-//                  rows + 1);
-//       ft_exit(FT_EXIT_FAILURE);
-//     }
-//     rows++;
-//   }
+  // First pass: count rows and validate column count
+  while (ft_fgets(line, sizeof(line), file)) {
+    int col_count = 0;
+    char *cursor = line;
+    char *token = ft_csv_next_token(&cursor);
+    while (token) {
+      col_count++;
+      token = ft_csv_next_token(&cursor);
+    }
+    if (cols == 0) {
+      cols = col_count; // set initial number of columns
+    } else if (col_count != cols) {
+      ft_fprintf(ft_stderr, "Inconsistent number of columns at row %d\n",
+                 rows + 1);
+      ft_exit(FT_EXIT_FAILURE);
+    }
+    rows++;
+  }
 
-//   // Reset file pointer
-//   ft_fseek(file, 0, FT_SEEK_SET);
+  // Reset file pointer
+  ft_fseek(file, 0, FT_SEEK_SET);
 
-//   // Allocate ndarray memory
-//   double *data = (double *)ft_malloc(rows * cols * sizeof(double));
-//   int *shape = (int *)ft_malloc(2 * sizeof(int));
-//   int *strides = (int *)ft_malloc(2 * sizeof(int));
-//   shape[0] = rows;
-//   shape[1] = cols;
-//   strides[0] = cols * sizeof(double);
-//   strides[1] = sizeof(double);
+  // Allocate ndarray memory
+  double *data = (double *)ft_malloc(rows * cols * sizeof(double));
+  int *shape = (int *)ft_malloc(2 * sizeof(int));
+  int *strides = (int *)ft_malloc(2 * sizeof(int));
+  shape[0] = rows;
+  shape[1] = cols;
+  strides[0] = cols * sizeof(double);
+  strides[1] = sizeof(double);
 
-//   // Second pass: read and fill the ndarray
-//   int index = 0;
-//   while (ft_fgets(line, sizeof(line), file)) {
-//     char *cursor = line;
-//     char *token = ft_csv_next_token(&cursor);
-//     while (token) {
-//       char *clean = ft_csv_clean_field(token);
-//       data[index++] = ft_atof(clean);
-//       token = ft_csv_next_token(&cursor);
-//     }
-//   }
+  // Second pass: read and fill the ndarray
+  int index = 0;
+  while (ft_fgets(line, sizeof(line), file)) {
+    char *cursor = line;
+    char *token = ft_csv_next_token(&cursor);
+    while (token) {
+      char *clean = ft_csv_clean_field(token);
+      data[index++] = ft_atof(clean);
+      token = ft_csv_next_token(&cursor);
+    }
+  }
 
-//   ft_fclose(file);
+  ft_fclose(file);
 
-//   ndarray arr = {data, shape, 2, sizeof(double), strides};
-//   return (arr);
-// }
+  ndarray arr = {data, shape, 2, sizeof(double), strides};
+  return (arr);
+}
 
 // Function to print shape, dtype and non-null count
 void ft_ndarray_info(const ndarray *arr) {
