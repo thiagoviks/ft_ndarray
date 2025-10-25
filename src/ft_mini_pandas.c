@@ -1,6 +1,5 @@
 #include "../include/ft_mini_pandas.h"
 #include <ft_maki.h>
-#include <stdio.h>
 
 double ft_ndarray_get(const ndarray *arr, int row, int col) {
   char *base = (char *)arr->data;
@@ -320,7 +319,7 @@ static char *ft_csv_clean_field(char *token) {
 //   }
 
 //   // Reset file pointer
-//   fseek(file, 0, SEEK_SET);
+//   ft_fseek(file, 0, FT_SEEK_SET);
 
 //   // Allocate ndarray memory
 //   double *data = (double *)ft_malloc(rows * cols * sizeof(double));
