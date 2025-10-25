@@ -162,6 +162,12 @@ int main() {
 }
 ```
 
+**Compile:**
+```bash
+clang hello.c -o hello -lft_maki -lft_ndarray
+./hello
+```
+
 ## Type Support
 
 - **Numeric types**: `int`, `float`, `double`
