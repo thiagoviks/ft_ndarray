@@ -182,6 +182,14 @@ This library requires the ft_maki project. Include the header in your project:
 #include <ft_maki.h>
 ```
 
+**Platform requirement**: Linux only
+
+This library requires the ft_maki project and is designed for Linux systems.
+```bash
+# Make sure you're on Linux
+clang your_program.c -o your_program  -lft_maki -lft_ndarray
+```
+
 ## License
 MIT
 
